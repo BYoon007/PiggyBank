@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import Footer from "../components/Footer";
 
 function Home() {
     return (
@@ -9,6 +10,7 @@ function Home() {
                 <p>This is the main page of your app.</p>
                 <Button variant="contained" sx={{ backgroundColor: "black"}}>Sign up</Button>
             </div>
+            <Footer />
         </div>
     );
 }
