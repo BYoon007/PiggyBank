@@ -16,7 +16,10 @@ const Navbar = () => {
       }}
     >
       <Toolbar>
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>piggyBank</Typography>
+        <Typography variant="h5" sx={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>
+          <span style={{ marginRight: "8px" }}>🐖</span>
+          piggyBank
+        </Typography>
         <Container sx={{ display: "flex", justifyContent: "center"}}>
           <MenuItem sx={{ fontWeight: "bold"}}>Home</MenuItem>
           <MenuItem sx={{ fontWeight: "bold"}}>Login</MenuItem>
