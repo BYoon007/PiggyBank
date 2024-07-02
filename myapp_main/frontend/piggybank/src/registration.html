@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="registration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1 class="header-title">piggyBank</h1>
+    </div>
+    <div class="container">
+        <form class="signUpForm">
+            <h2>Create an account</h2>
+            <p>Enter your information to sign up for this app</p>
+            <input type="email" placeholder="Email@domain.com" required>
+            <input type="text" placeholder="Full Name" required>
+            <input type="text" placeholder="University" required>
+            <button type="submit">Sign up</button>
+            <p>By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerTitle = document.querySelector('.header-title');
+
+            headerTitle.addEventListener('mouseenter', function() {
+                headerTitle.classList.add('bounce');
+            });
+
+            headerTitle.addEventListener('animationend', function() {
+                headerTitle.classList.remove('bounce');
+            });
+        });
+    </script>
+</body>
+</html>
