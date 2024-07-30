@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="/stylesheets/registration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1 class="header-title">
+            <a href="/homepage">
+                <button onclick="window.location.href='#'">piggyBank</button>
+            </a>
+        </h1>
+    </div>
+    <div class="container">
+        <form class="signUpForm" action='registerNewAccount' method="POST">
+            <h2>Create an account</h2>
+            <p>Enter your information to sign up!</p>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email" placeholder="Email@domain.com" required />
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="UserName" placeholder="Username" required />
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="FirstName" placeholder="First Name" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="Password" placeholder="Password" required />
+             <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerTitle = document.querySelector('.header-title');
+
+            headerTitle.addEventListener('mouseenter', function() {
+                headerTitle.classList.add('bounce');
+            });
+
+            headerTitle.addEventListener('animationend', function() {
+                headerTitle.classList.remove('bounce');
+            });
+        });
+    </script>
+</body>
+</html>

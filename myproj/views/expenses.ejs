@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="/stylesheets/expenses.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>piggyBank</h2>
+        <ul>
+            <li><a href="/expenses">Home</a></li>
+            <li><a href="/budget">Budget</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/monthlyplanner">Monthly Planner</a></li>
+            <li><a href="/transaction">Leaderboard</a></li>
+            <li><a href="/procedure">Expense Stats</a></li>
+            <li><a href="/homepage">Logout</a></li>        
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="budget-tracker">
+            <h1>Budget Tracker</h1>
+            <div class="search-filter">
+		<form id="search-form" action="/search" method="GET">
+			<input id="search-input" type="text" name="query" placeholder="Search expenses...">
+			<button id="search-button" type="submit">Filter</button>
+		</form>
+		<button id="add-expense-button">+ Add Expense</button>		
+            </div>
+
+	    
+	    <div id="add-expense-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<span id="close-modal" class="modal-close">&times;</span>
+			<h2>Add Expense</h2>
+			<form id="add-expense-form" class="modal-form" action="/addExpense" method="POST">
+				<!-- Form fields here -->
+
+				<label for="category-name">Category:</label>
+				<input type="text" id="category-name" name="categoryName" required>
+
+				<label for="expense-type">Expense Type:</label>
+				<input type="text" id="expense-type" name="expenseType" required>
+
+				<label for="amount">Amount:</label>
+				<input type="number" id="amount" name="amount" step="0.01" required>
+
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required>
+				<!-- More fields -->
+				<button type="submit" id="submit-expense-button">Add Expense</button>
+				<button type="submit" id="update-expense-button" style="display: none;">Update Expense</button>
+			</form>
+		</div>
+	    </div>
+
+	    <div id="update-expense-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<span id="close-update-modal" class="modal-close">&times;</span>
+			<h2>Update Expense</h2>
+			<form id="update-expense-form" class="modal-form" action="/updateExpense" method="PUT">
+				<input type="hidden" id="update-expense-id" name="expenseID">
+				
+				<label for="update-category-name">Category:</label>
+				<input type="text" id="update-category-name" name="categoryName" required>
+
+				<label for="update-expense-type">Expense Type:</label>
+				<input type="text" id="update-expense-type" name="expenseType" required>
+				
+				<label for="update-amount">Amount:</label>
+				<input type="number" id="update-amount" name="amount" step="0.01" required>
+				
+				<label for="update-username">Username:</label>
+				<input type="text" id="update-username" name="username" required>
+
+				<button type="submit" id="update-expense-submit-button">Update Expense</button>
+			</form>
+		   </div>
+	    </div>
+	  
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Username</th>
+                        <th>Modify</th>
+			<th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="expenses-table-body">
+                    <% if (expenses.length > 0) { %>
+                        <% expenses.forEach(expense => { %>
+                            <tr data-id="<%= expense.ExpenseID %>">
+                                <td><%= expense.ExpenseID %></td>
+                                <td><%= expense.CategoryName %></td>
+                                <td><%= expense.ExpenseType %></td>
+                                <td><%= expense.Amount %></td>
+                                <td><%= expense.UserName %></td>
+                                <td><button class="edit-btn">✏️</button></td>
+				<td><button class="delete-btn">🗑️</button></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="8">No expenses found</td>
+                        </tr>
+                    <% } %>	
+                </tbody>
+            </table>
+        </div>
+        <div class="spending-habits">
+            <h2>Other students with similar spending habits</h2>
+            <div class="expense-summary">
+                <div class="expense-category">
+                    <h3>Your Top Monthly Expenses</h3>
+                    <div id="top-expenses"></div>
+                </div>
+                <div class="similar-students-container" id="similar-students-container">
+                </div>
+		<div class="similar-students-container" id="similar-students-container">
+		</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+	$(document).ready(function() {
+
+	// Function to load expenses
+	function loadExpenses() {
+           $.ajax({
+                url: '/getExpenses',
+                method: 'GET',
+                success: function(data) {
+                    console.log('Get Expenses Response:', data);
+                    $('#expenses-table-body').empty();
+
+                    if(Array.isArray(data)) {
+                        data.forEach(expense => {
+                            $('#expenses-table-body').append(`
+                                 <tr data-id="${expense.ExpenseID}">
+                                     <td>${expense.ExpenseID}</td>
+                                     <td>${expense.CategoryName}</td>
+                                     <td>${expense.ExpenseType}</td>
+                                     <td>${expense.Amount}</td>
+                                     <td>${expense.UserName}</td>
+				     <td><button class="edit-btn">✏️</button></td>
+				     <td><button class="delete-btn" data-id="${expense.ExpenseID}">🗑️</button></td>
+                                  </tr>
+                               `);
+                          });
+                    } else {
+                         console.error('Unexpected data format:', data);
+                    }
+                },
+                error:function(xhr, status, error) {
+                    console.error('Error fetching expenses:', xhr.responseText);
+                }
+            });
+        }
+
+        loadExpenses();
+
+	//handle search form submission
+            $('#search-form').on('submit', function(e) {
+		e.preventDefault();
+                let query = $('#search-input').val();
+		const profileID = $('#profileID').val();
+		const username = $('#username').val();
+		console.log('Searching for:', query); // Logging the query
+
+                $.ajax({
+                    url: '/search',
+                    method: 'GET',
+                    data: { query: query },
+                    success: function(data) {
+                        // Clear the current table content
+                        $('#expenses-table-body').empty();
+                        
+                        // Check if data is an array and has elements
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(expense => {
+                                $('#expenses-table-body').append(`
+                                    <tr data-id="${expense.ExpenseID}">
+                                        <td>${expense.ExpenseID}</td>
+                                        <td>${expense.CategoryName}</td>
+                                        <td>${expense.ExpenseType}</td>
+                                        <td>${expense.Amount}</td>
+                                        <td>${expense.UserName}</td>
+                                        <td><button class="edit-btn">✏️</button></td>
+					<button class="delete-btn" data-id="${expense.ExpenseID}">🗑️</button>
+                                    </tr>
+                                `);
+                            });
+                        } else {
+                            $('#expenses-table-body').append(`
+                                <tr>
+                                    <td colspan="8">No expenses found</td>
+                                </tr>
+                            `);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching data:', error);
+                    }
+                });
+            });
+	    //Handle add expense button click
+	    $('#add-expense-button').on('click', function() {
+		$('#add-expense-modal').show();
+	    });
+
+	    //Close modal
+	    $('#close-modal, #close-update-modal').on('click', function() {
+		$('#add-expense-modal').hide();
+		$('#update-expense-modal').hide();
+	    });
+
+	    //Handle add expense form submission with AJAX
+	    $('#add-expense-form').on('submit', function(e) {
+		e.preventDefault();
+		var formData = $(this).serialize();		
+		console.log('Form data:', formData);
+		$.ajax({
+			url: '/addExpense',
+			method: 'POST',
+			data: formData,
+			success: function(response) {
+				console.log('Response:', response);
+				
+				alert('Expense added successfully!');
+				$('#add-expense-modal').hide();
+				loadExpenses();
+			
+			},
+			error: function(xhr, status, error) {
+				console.error('Error adding expense:', xhr.responseText);
+			}
+		});
+	    });
+
+	    //handle the update expense form submission
+	    $('#update-expense-form').on('submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: '/updateExpense',
+			method: 'PUT',
+			data: $(this).serialize(),
+			success: function(response) {
+				console.log('Response:', response);
+				if (response.success) {
+					alert('Expense updated successfully!');
+					$('#update-expense-modal').hide();
+					loadExpenses();
+				} else {
+					alert('Error updating expense.');
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error('Error updating expense:', xhr.responseText);
+			}
+		});
+	    });
+
+					
+	    //handle delete button click
+	    $('#expenses-table-body').on('click', '.delete-btn', function() {
+		var row = $(this).closest('tr');
+		var expenseID = row.data('id');
+	
+		console.log('ExpenseID to delete:', expenseID);
+
+		if (typeof expenseID === 'undefined') {
+			console.error('Error: Expense ID is undefined');
+			return;
+		}
+		
+		$.ajax({
+			url: '/deleteExpense/' + expenseID, 
+			method: 'DELETE', 
+			success: function(response) {
+				if (response.success) {
+					row.remove();
+					alert('Expense deleted successfully!');
+				} else {
+					alert('Error deleting expense.');
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error('Error deleting expense:', error);
+				alert('Error deleting expense.');
+			}
+		});
+	    });
+	    //handle the edit button click
+	    $('#expenses-table-body').on('click', '.edit-btn', function() {
+		var row = $(this).closest('tr');
+		var expenseID = row.data('id');
+		
+
+		// Fetch expense details
+		$.ajax({
+			url: '/getExpense/' + expenseID,
+			method: 'GET',
+			success: function(data) {
+				if (data) {
+					// Populate form with expense details
+					$('#update-expense-id').val(data.ExpenseID);
+					$('#update-category-name').val(data.CategoryName);
+					$('#update-expense-type').val(data.ExpenseType);
+					$('#update-amount').val(data.Amount);
+					$('#update-username').val(data.UserName);
+					
+					// Show update button and hide add button
+					$('#submit-expense-button').hide();
+					$('#update-expense-button').show();
+
+
+					// Show the modal
+					$('#update-expense-modal').show();
+				} else {
+					alert('Error fetching expense details.');
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error('Error fetching expense details:', error);
+				alert('Error fetching expense details.');
+			}
+		});
+	    });
+	    //load spending habits
+	    function loadSpendingHabits() {
+		$.ajax({
+			url: '/spendingHabits', 
+			method: 'GET',
+			success: function(data) {
+				console.log('Spending Habits Response', data);
+				
+				$('#top-expenses').empty();
+				data.topExpenses.forEach(expense => {
+					$('#top-expenses').append(`
+						<p><span class="tag ${expense.CategoryName.toLowerCase()}">${expense.CategoryName}</span> Spent: $${expense.Amount}</p>
+					`);
+				});
+
+				//update similar spenders
+				$('#similar-students-container').empty();
+				data.similarSpenders.forEach(spender => {
+					$('#similar-students-container').append(`
+						<div class="similar-students">
+							<h3>${spender.CategoryName}</h3>
+							${spender.users.map(user => `<p>${user.name} @${user.username}</p>`).join('')}
+						</div>
+					`);
+				});
+				
+			},
+			error: function(xhr, status, error) {
+				console.error('Error fetching spending habits:', xhr.responseText);
+			}
+		});
+	    }
+	loadSpendingHabits();
+        });
+    </script>
+</body>
+</html>
+	

@@ -1,0 +1,217 @@
+body {
+    display: flex;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.budget-tracker h1 {
+    margin-top: 0;
+}
+
+.search-filter {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-filter input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-filter button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+.search-filter button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+.edit-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.tag {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+}
+
+.food {
+    background-color: #f39c12;
+}
+
+.entertainment {
+    background-color: #3498db;
+}
+
+.rent {
+    background-color: #e74c3c;
+}
+
+.tuition {
+    background-color: #27ae60;
+}
+
+.design-backlog {
+    background-color: #8e44ad;
+}
+
+.bug-fixes {
+    background-color: #d35400;
+}
+
+.spending-habits {
+    margin-top: 50px;
+}
+
+.expense-summary {
+    display: flex;
+    justify-content: space-between;
+}
+
+.expense-category, .similar-students {
+    width: 30%;
+}
+
+.expense-category h3, .similar-students h3 {
+    margin-top: 0;
+}
+
+#add-expense-modal {
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 500px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	border-radius: 8px;
+	position: relative;
+}
+
+#close-modal {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+#close-modal:hover,
+#close-modal:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#add-expense-form {
+	display: flex;
+	flex-direction: column;
+}
+
+
+#add-expense-form button[type="submit"] {
+	grid-column: span 2; /* Make the button span across both columns */
+    	margin-top: 20px;
+    	padding: 10px 20px;
+    	background-color: #4CAF50;
+    	color: white;
+    	border: none;
+    	border-radius: 4px;
+    	cursor: pointer;
+    	justify-self: center; /* Center the button horizontally */
+}
+
+#add-expense-form button[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+#add-expense-form input, #add-expense-form label {
+	margin-bottom: 10px;
+}
+
+
+/* Labels */
+#add-expense-form label {
+    font-weight: 600; /* Optional: make label text bolder */
+    margin-bottom: 0; /* Remove bottom margin from labels */
+}

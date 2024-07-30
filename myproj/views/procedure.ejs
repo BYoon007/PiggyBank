@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Data</title>
+    <link rel="stylesheet" href="/stylesheets/procedure.css">
+</head>
+<body>
+    <div class="container">
+        <button onclick="loadData()">Load Data</button>
+        <div id="results">
+            <div id="query1-results">
+                <h2>Top 'Want' Expenses</h2>
+                <table id="query1-table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Expense ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="query2-results">
+                <h2>Average Expense by Category per User</h2>
+                <table id="query2-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Email</th>
+                            <th>Category</th>
+                            <th>Average Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+ <script>
+        async function loadData() {
+            try {
+                const response = await fetch('/perform-procedure', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Unknown error');
+                }
+
+                const data = await response.json();
+                populateTable('query1-table', data.results1);
+                populateTable('query2-table', data.results2);
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        }
+
+        function populateTable(tableId, data) {
+            const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            table.innerHTML = ''; // Clear existing data
+            data.forEach(row => {
+                const newRow = table.insertRow();
+                Object.values(row).forEach(value => {
+                    const cell = newRow.insertCell();
+                    cell.textContent = value;
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>

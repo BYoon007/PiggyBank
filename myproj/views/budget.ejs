@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Plan</title>
+    <link rel="stylesheet" href="/stylesheets/budget.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <h2 class="header-title">piggyBank</h2>
+        <ul>
+            <li><a href="/expenses">Home</a></li>
+            <li><a href="/budget" class="active">Budget</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/monthlyplanner">Monthly Planner</a></li>
+            <li><a href="/transaction">Leaderboard</a></li>
+            <li><a href="/procedure">Expense Stats</a></li> 
+            <li><a href="/homepage">Logout</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="container">
+            <form class="budgetForm" action="/saveBudget" method="POST">
+                <h2>Setup your Budget</h2>
+                <div class="input-group">
+                    <label for="username">Enter your Username</label>
+                    <input type="text" id="username" name="UserName" placeholder="Enter username" required>
+                </div>
+                <div class="input-group">
+                    <label for="budget">Enter your Budget</label>
+                    <input type="number" id="budget" name="budget" placeholder="Enter amount" required>
+                </div>
+                <div class="input-group">
+                    <label for="preselected-budgets">Or Select a Preselected Budget</label>
+                    <select id="preselected-budgets" name="preselected-budgets">
+                        <option value="">Select a budget</option>
+                        <option value="1000">$1,000</option>
+                        <option value="2000">$2,000</option>
+                        <option value="3000">$3,000</option>
+                        <option value="4000">$4,000</option>
+                        <option value="5000">$5,000</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerTitle = document.querySelector('.header-title');
+            const form = document.querySelector('.budgetForm');
+            const budgetInput = document.getElementById('budget');
+            const preselectedBudgets = document.getElementById('preselected-budgets');
+
+            headerTitle.addEventListener('mouseenter', function() {
+                headerTitle.classList.add('bounce');
+            });
+
+            headerTitle.addEventListener('animationend', function() {
+                headerTitle.classList.remove('bounce');
+            });
+
+            // Optional: Auto-fill budget input when a preselected option is chosen
+            preselectedBudgets.addEventListener('change', function() {
+                if (preselectedBudgets.value) {
+                    budgetInput.value = preselectedBudgets.value;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

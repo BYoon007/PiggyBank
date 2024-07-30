@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - piggyBank </title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+        <div class = "header">
+            <h2 class="header-title">piggyBank</h2>
+        </div>    
+            <nav>
+                <ul>
+                    <li><a href="/expenses">Home</a></li>
+                    <li><a href="/budget">Budget</a></li>
+                    <li><a href="/profile" class="active">Profile</a></li>
+                    <li><a href="/monthlyplanner">Monthly Planner</a></li>
+                    <li><a href="/transaction">Leaderboard</a></li>
+                    <li><a href="/procedure">Expense Stats</a></li>
+                    <li><a href="/homepage">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <h1>Edit Profile</h1>
+            <form action="/SaveProfileAction" method="POST" class="profile-form">
+                <label for="UserName">Username</label>
+                <input type="text" id="UserName" name="UserName" required>
+
+                <label for="Major">Major</label>
+                <input type="text" id="Major" name="Major">
+
+                <label for="School_Year">School Year</label>
+                <input type="text" id="School_Year" name="School_Year">
+
+                <label for="Gender">Gender</label>
+                <input type="text" id="Gender" name="Gender">
+
+                <label for="Age">Age</label>
+                <input type="number" id="Age" name="Age">
+
+                <label for="Job">Job</label>
+                <input type="checkbox" id="Job" name="Job">
+
+                <label for="Drinking">Drinking</label>
+                <input type="checkbox" id="Drinking" name="Drinking" value = 1>
+
+                <label for="Smoking">Smoking</label>
+                <input type="checkbox" id="Smoking" name="Smoking" value = 1>
+
+                <label for="Scholarship">Scholarship</label>
+                <input type="checkbox" id="Scholarship" name="Scholarship" value = 1>
+
+                <label for="Housing">Campus Housing</label>
+                <input type="checkbox" id="Housing" name="Housing" value = 1>
+
+                <button type="submit" class="save-changes">Save Changes</button>
+            </form>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerTitle = document.querySelector('.header-title');
+
+            headerTitle.addEventListener('mouseenter', function() {
+                headerTitle.classList.add('bounce');
+            });
+
+            headerTitle.addEventListener('animationend', function() {
+                headerTitle.classList.remove('bounce');
+            });
+        });
+    </script>
+</body>
+</html>

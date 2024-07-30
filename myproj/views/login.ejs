@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome back. Ready to budget?</h1>
+        <form class="loginForm" action='loginAction' method="POST">
+            <label for="UserName">Username:</label>
+            <input type="text" id="UserName" name="UserName" required>
+            <label for="Password">Password:</label>
+            <input type="password" id="Password" name="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="back-link">
+            <a href="/homepage">&#8592; Back</a>
+        </div>
+    </div>
+</body>
+</html>

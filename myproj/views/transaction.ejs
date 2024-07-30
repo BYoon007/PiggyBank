@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Data Display</title>
+    <link rel="stylesheet" href="/stylesheets/transaction.css">
+</head>
+<body>
+    <div class="container">
+        <button onclick="loadData()">Load Data</button>
+        <div id="results">
+            <table id="budget-overview">
+                <caption><strong>Expenses and Budget Overview</strong></caption>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>Total Needs Expenses</th>
+                        <th>Total Wants Expenses</th>
+                        <th>Total Budget</th>
+                        <th>Desired Needs</th>
+                        <th>Desired Wants</th>
+                        <th>Desired Savings</th>
+                        <th>Actual Needs %</th>
+                        <th>Actual Wants %</th>
+                        <th>Actual Savings %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+            <table id="expense-stats">
+                <caption><strong>Expense Statistics by Major/School Year</strong></caption>
+                <thead>
+                    <tr>
+                        <th>Major/School Year</th>
+                        <th>Minimum Expense</th>
+                        <th>Average Expense</th>
+                        <th>Maximum Expense</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('/perform-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Unknown error');
+                }
+
+                const data = await response.json();
+                populateTable('budget-overview', data.results1);
+                populateTable('expense-stats', data.results2);
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        }
+
+        function populateTable(tableId, data) {
+            const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            table.innerHTML = ''; // Clear existing data
+            data.forEach(row => {
+                const newRow = table.insertRow();
+                Object.values(row).forEach(value => {
+                    const cell = newRow.insertCell();
+                    cell.textContent = value;
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
