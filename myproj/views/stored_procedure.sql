@@ -23,7 +23,6 @@ BEGIN
         )
         ORDER BY ex.Amount DESC;
 
-        -- Second Query
         SELECT UserName, FirstName, Email, CategoryName, AVG(Amount) as avg_Amount
         FROM User_Account ua
         NATURAL JOIN Expenses e 
