@@ -4,7 +4,7 @@
 
 ---
 
-## 🎮 Features
+## 📱 Features
 
 * **Full CRUD Functionality:** Seamlessly executes Create, Read, Update, and Delete operations to manage personal expense and budget records securely within the system database.
 * **50/30/20 Budgeting Engine:** Dynamically calculates and allocates income according to the classic financial literacy standard:
@@ -17,7 +17,7 @@
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## ⚙️ Tech Stack & Architecture
 
 * **Frontend:** React.js
 * **Backend:** Node.js, Express
@@ -27,12 +27,3 @@
   * Relational database schemas optimized for user-to-expense data mapping.
   * State-controlled modal rendering for dynamic budget alerts.
   * Backend routing for secure data persistence.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-To run the web application locally, ensure you have the following installed:
-* [Node.js](https://nodejs.org/) (v16.x or higher recommended)
-* [MySQL Server](https://dev.mysql.com/downloads/mysql/)
